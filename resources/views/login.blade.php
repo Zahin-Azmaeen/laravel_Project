@@ -18,7 +18,7 @@
                 <form action="{{ route('sample.validate_login') }}" method="post">
                     @csrf
                     <div class="form-group mb-3">
-                        <input type="text" name="email" class="form-control" placeholder="Email" />
+                        <input type="text" name="email" class="form-control" placeholder="Email/username/phone" />
                         @if($errors->has('email'))
                         <span class="text-danger">{{ $errors->first('email') }}</span>
                         @endif

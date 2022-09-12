@@ -25,9 +25,10 @@ class SampleController extends Controller
         $request->validate([
             'FirstName' => 'required',
             'LastName' => 'required',
-            'Email' => 'required|email',
+            'UserName' => 'required',
+            'Email' => 'required|email|unique:users',
             'Password' => 'required|min:5|max:18',
-            'Phone' => 'required',
+            'Phone' => 'required||numeric|digits:11|unique:users',
             'Skills' => 'required',
             'Gender' => 'required',
             'image' => 'required',
@@ -36,6 +37,7 @@ class SampleController extends Controller
         $post = new User;
         $post->FirstName = $request->FirstName;
         $post->LastName = $request->LastName;
+        $post->UserName = $request->UserName;
         $post->email = $request->Email;
         $post->password = Hash::make($request->Password);
         $post->Phone = $request->Phone;
@@ -49,17 +51,14 @@ class SampleController extends Controller
 
     function validate_login(Request $request)
     {
-        $request->validate([
-            'email' =>  'required',
-            'password'  =>  'required'
-        ]);
 
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
+        if (
+            Auth::attempt(['UserName' => request('email'), 'password' => request('password')]) ||
+            Auth::attempt(['email' => request('email'), 'password' => request('password')]) ||
+            Auth::attempt(['Phone' => request('email'), 'password' => request('password')])
+        ) {
             return redirect('dashboard');
         }
-
         return redirect('login')->with('success', 'Login details are not valid');
     }
 
@@ -101,6 +100,16 @@ class SampleController extends Controller
     }
     public function storeEditData(Request $request, $id)
     {
+        $request->validate([
+            'FirstName' => 'required',
+            'LastName' => 'required',
+            'UserName' => 'required',
+            //'Email' => 'required|email',
+            //'Password' => 'required|min:5|max:18',
+            'Phone' => 'required|numeric|digits:11|unique:users',
+            'Skills' => 'required',
+            'Gender' => 'required'
+        ]);
         $user = User::find($id);
         if ($request->hasFile('image')) {
             $request->validate([
@@ -108,19 +117,25 @@ class SampleController extends Controller
             ]);
             $path = $request->file('image')->store('public/images');
             $user->image = $path;
-        } else {
+        }
+        if ($request->filled('Password')) {
+            $request->validate([
+                'Password' => 'required|min:5|max:18'
+            ]);
+            $user->password = Hash::make($request->Password);
         }
 
         $user->FirstName = $request->FirstName;
         $user->LastName = $request->LastName;
-        $user->Email = $request->Email;
-        $user->Password = $request->Password;
+        $user->UserName = $request->UserName;
+        //$user->email = $request->Email;
+        // $user->password = Hash::make($request->Password);
         $user->Phone = $request->Phone;
         $user->Gender = $request->Gender;
         $user->Skills = implode(',', $request['Skills']);
         $user->save();
 
         return redirect('dashboard')
-            ->with('success', 'User has been created successfully.');
+            ->with('success', 'User has been updated successfully.');
     }
 }

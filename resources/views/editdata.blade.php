@@ -12,36 +12,42 @@
 <div class="row justify-content-center">
     <div class="col-md-4">
         <div class="card">
-            <div class="card-header">Upfate Profile</div>
+            <div class="card-header">Update Profile</div>
             <div class="card-body">
                 <form action="{{ url('/store-edit-data/'.$data->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group mb-3">
-                        <input type="text" name="FirstName" class="form-control" value="{{$data->FirstName}}" />
+                        <input type="text" name="FirstName" class="form-control" value="{{$data->FirstName}}" placeholder="FirstName" />
                         @if($errors->has('FirstName'))
                         <span class="text-danger">{{ $errors->first('FirstName') }}</span>
                         @endif
                     </div>
                     <div class="form-group mb-3">
-                        <input type="text" name="LastName" class="form-control" value="{{$data->LastName}}" />
+                        <input type="text" name="LastName" class="form-control" value="{{$data->LastName}}" placeholder="LastName" />
                         @if($errors->has('LastName'))
                         <span class="text-danger">{{ $errors->first('LastName') }}</span>
                         @endif
                     </div>
                     <div class="form-group mb-3">
-                        <input type="text" name="Email" class="form-control" value="{{$data->Email}}" />
+                        <input type="text" name="UserName" class="form-control" value="{{$data->UserName}}" placeholder="UserName" />
+                        @if($errors->has('UserName'))
+                        <span class="text-danger">{{ $errors->first('UserName') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="text" name="Email" class="form-control" value="{{$data->email}}" readonly />
                         @if($errors->has('Email'))
                         <span class="text-danger">{{ $errors->first('Email') }}</span>
                         @endif
                     </div>
                     <div class="form-group mb-3">
-                        <input type="password" name="Password" class="form-control" value="{{$data->Password}}" />
+                        <input type="password" name="Password" class="form-control" placeholder="Password" />
                         @if($errors->has('Password'))
                         <span class="text-danger">{{ $errors->first('Password') }}</span>
                         @endif
                     </div>
                     <div class="form-group mb-3">
-                        <input type="text" name="Phone" class="form-control" value="{{$data->Phone}}" />
+                        <input type="text" name="Phone" class="form-control" value="{{$data->Phone}}" placeholder="Phone" />
                         @if($errors->has('Phone'))
                         <span class="text-danger">{{ $errors->first('Phone') }}</span>
                         @endif
@@ -80,7 +86,7 @@
 
 
                         </div>
-                        <input type="file" name="image" class="form-control" placeholder="">
+                        <input type="file" name="image" class="form-control" placeholder="image-jpg,png,jpeg,gif,svg">
                         @if($errors->has('image'))
                         <span class="text-danger">{{ $errors->first('image') }}</span>
                         @endif

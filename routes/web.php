@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SampleController;
+use App\Http\Controllers\DropDownController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,3 +36,6 @@ Route::controller(SampleController::class)->group(function () {
     Route::get('edit-modal-data/{id}', 'editModalData')->name('editModalData');
     Route::post('/store-edit-data/{id}', 'storeEditData')->name('storeEditData');
 });
+Route::get('/drop', [DropDownController::class, 'index']);
+Route::post('/dropdistricts', [DropdownController::class, 'fetchState']);
+Route::post('/store-data', [DropdownController::class, 'storeData']);

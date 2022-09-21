@@ -73,7 +73,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <strong>Image Upload:</strong>
-                        <input type="file" name="image" value="{{old('image')}}" class="form-control" placeholder="image-jpg,png,jpeg,gif,svg">
+                        <input type="file" multiple accept="image/*" name="image" value="{{old('image')}}" class="form-control" placeholder="image-jpg,png,jpeg,gif,svg">
                         @if($errors->has('image'))
                         <span class="text-danger">{{ $errors->first('image') }}</span>
                         @endif

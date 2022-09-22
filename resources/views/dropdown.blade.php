@@ -61,6 +61,29 @@
             });
         });
 
+        $("#submit").on('click', function() {
+            var division = $('#division').val();
+            var district = $('#district').val();
+            var thana = $('#thana').val();
+
+
+            $.ajax({
+                url: "{{url('/add')}}",
+                method: 'get',
+                data: {
+                    division: division,
+                    district: district,
+                    thana: thana,
+                },
+                success: function(result) {
+                    $('.alert').show();
+                    $('.alert').html(result.success);
+                    //$('#tbcat').append(result.row);
+                }
+            });
+        });
+
+
     });
 </script>
 

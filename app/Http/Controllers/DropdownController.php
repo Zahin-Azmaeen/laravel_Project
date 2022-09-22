@@ -26,13 +26,9 @@ class DropdownController extends Controller
     }
     public function storeData(Request $request)
     {
-        $thana = new Thana;
-        $thana->FirstName = $request->division;
-        $thana->FirstName = $request->FirstName;
-        $thana->FirstName = $request->FirstName;
-        $thana->save();
-
-        return redirect('/drop')
-            ->with('success', 'Inserted successfully.');
+        Thana::create($request->all());
+        return json_encode(array(
+            "statusCode" => 200
+        ));
     }
 }

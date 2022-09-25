@@ -26,9 +26,11 @@ class DropdownController extends Controller
     }
     public function storeData(Request $request)
     {
-        Thana::create($request->all());
-        return json_encode(array(
-            "statusCode" => 200
-        ));
+
+        $input = new Thana;
+        $input->division_id = $request->division;
+        $input->district_id = $request->district;
+        $input->thana = $request->thana;
+        $input->save();
     }
 }

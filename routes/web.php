@@ -38,4 +38,4 @@ Route::controller(SampleController::class)->group(function () {
 });
 Route::get('/drop', [DropDownController::class, 'index']);
 Route::post('/dropdistricts', [DropdownController::class, 'fetchState']);
-Route::post('/add', [DropdownController::class, 'storeData']);
+Route::post('/save-data', [DropdownController::class, 'storeData']);

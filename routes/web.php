@@ -37,5 +37,8 @@ Route::controller(SampleController::class)->group(function () {
     Route::post('/store-edit-data/{id}', 'storeEditData')->name('storeEditData');
 });
 Route::get('/drop', [DropDownController::class, 'index']);
+Route::get('/category', [DropDownController::class, 'categoryList']);
 Route::post('/dropdistricts', [DropdownController::class, 'fetchState']);
+Route::post('/dropthanas', [DropdownController::class, 'fetchThana']);
 Route::post('/save-data', [DropdownController::class, 'storeData']);
+Route::get('/d', [DropdownController::class, 'dd']);

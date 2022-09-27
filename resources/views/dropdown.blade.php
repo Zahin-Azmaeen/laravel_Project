@@ -48,6 +48,21 @@
                 </select>
             </div>
         </div>
+        <div class="row my-5">
+            <div class="col">
+                <label for="thana3">Select Thana:</label>
+                <select name="thana3" id="thana3">
+                    <option disabled hidden selected>-- Select Thana --</option>
+                </select>
+            </div>
+            <div class="col">
+
+                <label for="thana4">Select Thana:</label>
+                <select name="thana4" id="thana4">
+                    <option disabled hidden selected>-- Select Thana --</option>
+                </select>
+            </div>
+        </div>
 
         <div class="row my-5">
             <div class="col">
@@ -80,7 +95,7 @@
         });
         $("#district").change(function() {
             var d1 = $('#district').val();
-            $('#district2').val(d1);
+            $('#district2').val(d1).trigger('change');
         });
         /*------------------------------------------
         --------------------------------------------
@@ -100,10 +115,31 @@
                 },
                 dataType: 'json',
                 success: function(result) {
+                    console.log(result)
                     $('#district').html('<option disabled hidden selected>-- Select District --</option>');
-                    $.each(result.district, function(key, value) {
+                    $.each(result, function(key, value) {
                         $("#district").append('<option value="' + value
                             .district_id + '">' + value.district_name + '</option>');
+                    });
+                }
+            });
+        });
+        $('#district').on('change', function() {
+            var iddistrict = this.value;
+            //alert(iddistrict);
+            $.ajax({
+                url: "{{url('/dropthanas')}}",
+                type: "POST",
+                data: {
+                    district_id: iddistrict,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function(result) {
+                    $('#thana3').html('<option disabled hidden selected>-- Select Thana --</option>');
+                    $.each(result, function(key, value) {
+                        $("#thana3").append('<option value="' + value
+                            .thana_id + '">' + value.thana_name + '</option>');
                     });
                 }
             });
@@ -123,38 +159,13 @@
                 dataType: 'json',
                 success: function(result) {
                     $('#district2').html('<option disabled hidden selected>-- Select District --</option>');
-                    $.each(result.district, function(key, value) {
+                    $.each(result, function(key, value) {
                         $("#district2").append('<option value="' + value
                             .district_id + '">' + value.district_name + '</option>');
                     });
                 }
             });
         });
-        // $('#division').on('change', function() {
-        //     var idivision = this.value;
-
-
-        //     $.ajax({
-        //         url: "{{url('/dropdistricts')}}",
-        //         type: "POST",
-        //         data: {
-        //             division_id: idivision,
-        //             _token: '{{csrf_token()}}'
-        //         },
-        //         dataType: 'json',
-        //         success: function(result) {
-        //             $('#district2').html('<option disabled hidden selected>-- Select District --</option>');
-        //             $.each(result.district, function(key, value) {
-        //                 $("#district2").append('<option value="' + value
-        //                     .district_id + '">' + value.district_name + '</option>');
-        //             });
-        //         }
-        //     });
-        // });
-
-
-
-
     });
 
     $('body').on('click', '#submit', function(e) {

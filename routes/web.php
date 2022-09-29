@@ -41,4 +41,5 @@ Route::get('/category', [DropDownController::class, 'categoryList']);
 Route::post('/dropdistricts', [DropdownController::class, 'fetchState']);
 Route::post('/dropthanas', [DropdownController::class, 'fetchThana']);
 Route::post('/save-data', [DropdownController::class, 'storeData']);
+Route::post('/savedata', [DropdownController::class, 'savedata'])->name('savedata');
 Route::get('/d', [DropdownController::class, 'dd']);

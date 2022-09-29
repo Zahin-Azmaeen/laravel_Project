@@ -27,7 +27,8 @@
 </head>
 
 <body>
-    <form>
+    <form action="{{ route('savedata') }}" method="POST">
+        @csrf
         <select name="category" id="category">
             <option disabled hidden selected>-- Select category --</option>
             @foreach ($category as $cat)
@@ -36,7 +37,7 @@
         </select>
         <input type="text" id="subcategory" placeholder="Subcategory">
         <input type="button" class="add-row" value="Add Row">
-    </form>
+    
     <table id="myTable">
         <thead>
             <tr>
@@ -49,7 +50,9 @@
 
         </tbody>
     </table>
-    <button type="button" class="submit">Submit</button>
+
+    <button type="submit" class="submit" id="submit">Submit</button>
+</form>
 </body>
 
 </html>
@@ -62,18 +65,24 @@
             // var category = $("#category").val();
             var id = $("#category option:selected").val();
             var category = $("#category option:selected").text();
-
             var subcategory = $("#subcategory").val();
-            var markup = "<tr><td>" + category + "</td><td>" + subcategory + "</td><td><button class='btn_row_delete' id='deletebtn' onclick='deleteRow(this);'>Delete</button></td></tr>";
+
+            if(category != "" && subcategory != ""){
+                var markup = "<tr><td><input type='hidden' name='category[]' value="+id+">" + category + "</td><td><input type='hidden' name='subcategory[]' value="+subcategory+">" + subcategory +
+                "</td><td><button class='btn_row_delete' id='deletebtn' onclick='deleteRow(this);'>Delete</button></td></tr>";
             $("#subcategory").val('').trigger('change');
-            $("#category").val('').trigger('change');
-
+            // $("#category").val('').trigger('change');
             $("table tbody").append(markup);
-
-
+            }else{
+                alert("Cannot be null");
+            }
+            
         });
         $(document).on('click', ".btn_row_delete", function(e) {
             var r = $(this).closest('tr').remove();
         });
+
     });
+    
+    
 </script>

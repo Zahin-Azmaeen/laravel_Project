@@ -10,6 +10,7 @@ use App\Models\Dropdown2;
 use App\Models\Dropdown3;
 use App\Models\Thana;
 use App\Models\category;
+use App\Models\categoryStore;
 
 class DropdownController extends Controller
 {
@@ -52,5 +53,34 @@ class DropdownController extends Controller
     {
         $category = category::all();
         return view('dynamictable', compact('category'));
+    }
+    public function savedata(Request $request)
+    {
+        // dd($request->all());
+        $category = $request->category;
+        $subcategory = $request->subcategory;
+        // dd($subcategory);
+
+        // for ($i = 0; $i < count($category); $i++) {
+        //     $data = [
+        //         'category' => $category[$i],
+        //         'subcatagory' => $subcategory[$i]
+        //     ];
+        //     DB::table('catagory_store')->insert($data);
+        // }
+        $input = new categoryStore;
+        foreach ($category as $i => $cat) {
+
+            $data = [
+                'category' => $category[$i],
+                'subcatagory' => $subcategory[$i]
+            ];
+            // DB::table('catagory_store')->insert($data);
+            // dd($data);
+            // $input->save($data);
+            $input->insert($data);
+        }
+
+        return back();
     }
 }
